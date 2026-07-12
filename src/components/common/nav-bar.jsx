@@ -61,10 +61,14 @@ function NavBar() {
         >
           <Typography
             variant="h6"
+            onClick={() => navigate('/')}
             sx={{
               fontWeight: 700,
               color: 'text.primary',
               letterSpacing: '-0.02em',
+              cursor: 'pointer',
+              userSelect: 'none',
+              '&:hover': { opacity: 0.85 },
             }}
           >
             My
