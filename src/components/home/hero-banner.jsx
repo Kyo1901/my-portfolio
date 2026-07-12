@@ -1,12 +1,13 @@
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 /**
  * HeroBanner 컴포넌트
- * Home 최상단의 와이드 배너형 Hero 영역.
- * 큰 가로 비주얼(그라데이션 + 네온 글로우) 위에 이름/소개 플레이스홀더와 CTA 를 배치한다.
+ * Home 최상단의 풀-width Hero 밴드.
+ * 어두운 배경 위 상단 중앙 네온 글로우 + 중앙 정렬 텍스트(인사말/제목/소개/CTA)로 구성한다.
  *
  * Props: 없음 (플레이스홀더 텍스트 고정)
  *
@@ -16,93 +17,113 @@ import Chip from '@mui/material/Chip';
 function HeroBanner() {
   return (
     <Box
+      component="section"
       sx={{
         position: 'relative',
         overflow: 'hidden',
-        borderRadius: 4,
-        border: '1px solid',
-        borderColor: 'divider',
-        bgcolor: 'background.paper',
-        px: { xs: 3, md: 8 },
-        py: { xs: 6, md: 10 },
-        minHeight: { xs: 280, md: 380 },
+        width: '100%',
+        minHeight: { xs: '80vh', md: '88vh' },
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
-        // 와이드 배너 비주얼: 대각선 그린 그라데이션 + 우측 상단 네온 글로우
+        textAlign: 'center',
+        px: { xs: 2, md: 3 },
+        bgcolor: 'background.default',
+        // 상단 중앙 네온 글로우
         backgroundImage:
-          'radial-gradient(600px circle at 85% 15%, rgba(0,255,163,0.18), transparent 55%), ' +
-          'linear-gradient(135deg, rgba(0,255,163,0.10) 0%, rgba(24,25,29,0) 45%)',
+          'radial-gradient(700px circle at 50% 0%, rgba(0,255,163,0.16), transparent 60%)',
       }}
     >
-      <Chip
-        label="SECTION 01 · HERO"
-        size="small"
-        sx={{
-          alignSelf: 'flex-start',
-          mb: 2,
-          fontWeight: 700,
-          letterSpacing: '0.1em',
-          color: 'primary.main',
-          bgcolor: 'rgba(0,255,163,0.10)',
-          border: '1px solid',
-          borderColor: 'rgba(0,255,163,0.35)',
-        }}
-      />
-
-      <Typography
-        variant="h1"
-        sx={{
-          color: 'text.primary',
-          fontWeight: 800,
-          fontSize: { xs: '2.2rem', md: '3.6rem' },
-          lineHeight: 1.15,
-          mb: 2,
-        }}
-      >
-        Your
-        <Box component="span" sx={{ color: 'primary.main' }}>
-          Name
-        </Box>
-      </Typography>
-
-      <Typography
-        sx={{
-          color: 'text.secondary',
-          fontSize: { xs: '1rem', md: '1.25rem' },
-          lineHeight: 1.7,
-          maxWidth: 640,
-          mb: 4,
-        }}
-      >
-        여기는 Hero 섹션입니다. 메인 비주얼, 이름, 간단 소개가 들어갈 예정입니다.
-      </Typography>
-
-      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
+      <Container maxWidth="md" disableGutters>
+        <Typography
+          variant="overline"
           sx={{
+            display: 'block',
+            color: 'primary.main',
             fontWeight: 700,
-            color: 'primary.contrastText',
-            '&:hover': { bgcolor: 'primary.dark' },
+            letterSpacing: '0.2em',
+            mb: 2,
           }}
         >
-          포트폴리오 보기
-        </Button>
-        <Button
-          variant="outlined"
-          size="large"
+          안녕하세요
+        </Typography>
+
+        <Typography
+          variant="h1"
           sx={{
-            fontWeight: 700,
             color: 'text.primary',
-            borderColor: 'divider',
-            '&:hover': { borderColor: 'primary.main', color: 'primary.main' },
+            fontWeight: 800,
+            fontSize: { xs: '2.2rem', md: '3.6rem' },
+            lineHeight: 1.2,
+            mb: 2,
           }}
         >
-          연락하기
-        </Button>
+          Your
+          <Box component="span" sx={{ color: 'primary.main' }}>
+            Name
+          </Box>
+        </Typography>
+
+        <Typography
+          sx={{
+            color: 'text.secondary',
+            fontSize: { xs: '1rem', md: '1.2rem' },
+            lineHeight: 1.7,
+            maxWidth: 620,
+            mx: 'auto',
+            mb: 4,
+          }}
+        >
+          여기는 Hero 섹션입니다. 메인 비주얼, 이름, 간단 소개가 들어갈 예정입니다.
+        </Typography>
+
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{
+              fontWeight: 700,
+              color: 'primary.contrastText',
+              '&:hover': { bgcolor: 'primary.dark' },
+            }}
+          >
+            프로젝트 보기
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            sx={{
+              fontWeight: 700,
+              color: 'text.primary',
+              borderColor: 'divider',
+              '&:hover': { borderColor: 'primary.main', color: 'primary.main' },
+            }}
+          >
+            연락하기
+          </Button>
+        </Box>
+      </Container>
+
+      {/* 하단 스크롤 인디케이터 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: { xs: 16, md: 32 },
+          left: '50%',
+          transform: 'translateX(-50%)',
+          color: 'text.disabled',
+        }}
+      >
+        <KeyboardArrowDownIcon />
       </Box>
     </Box>
   );
