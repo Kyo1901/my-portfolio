@@ -62,9 +62,11 @@ body {
 }
 
 /* 스크롤바 유무에 따른 헤더 위치 틀어짐 방지:
-   스크롤바 공간을 항상 예약해 페이지마다 뷰포트 폭을 일정하게 유지 */
+   스크롤바 공간을 항상 예약해 페이지마다 뷰포트 폭을 일정하게 유지.
+   예약된 공간이 빈 띠로 보이지 않도록 배경을 페이지 배경색과 일치시킴 */
 html {
   scrollbar-gutter: stable;
+  background-color: var(--color-bg-primary);
 }
 
 body {
