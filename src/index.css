@@ -61,6 +61,12 @@ body {
   min-height: 100vh;
 }
 
+/* 스크롤바 유무에 따른 헤더 위치 틀어짐 방지:
+   스크롤바 공간을 항상 예약해 페이지마다 뷰포트 폭을 일정하게 유지 */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--color-bg-primary);
   color: var(--color-text-secondary);
