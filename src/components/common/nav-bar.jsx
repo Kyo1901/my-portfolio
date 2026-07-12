@@ -44,10 +44,10 @@ function NavBar() {
       position="sticky"
       elevation={0}
       sx={{
-        bgcolor: 'background.default',
+        bgcolor: 'background.paper',
         borderBottom: '1px solid',
-        borderColor: 'divider',
-        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.5)',
+        borderColor: 'rgba(0, 255, 163, 0.25)',
+        boxShadow: '0 2px 16px rgba(0, 0, 0, 0.6)',
       }}
     >
       <Container maxWidth="lg">

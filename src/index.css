@@ -66,7 +66,7 @@ body {
    예약된 공간이 빈 띠로 보이지 않도록 배경을 페이지 배경색과 일치시킴 */
 html {
   scrollbar-gutter: stable;
-  background-color: var(--color-bg-primary);
+  background-color: var(--color-bg-secondary);
 }
 
 body {
