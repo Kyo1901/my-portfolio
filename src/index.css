@@ -1,0 +1,75 @@
+/* ===================================================================
+   컬러 팔레트 디자인 시스템 (출처: 치지직 CHZZK)
+   "컬러 팔레트 디자인 시스템.md" 의 CSS 변수를 그대로 적용
+   기본은 다크 모드, prefers-color-scheme: light 로 라이트 모드 대응
+   =================================================================== */
+:root {
+  /* Primary Colors */
+  --color-primary: #00ffa3;        /* 치지직 시그니처 네온 그린 */
+  --color-primary-light: #5cffc4;  /* 밝은 그린 (호버·하이라이트) */
+  --color-primary-dark: #00cc82;   /* 어두운 그린 (눌림·활성) */
+
+  /* Secondary Colors */
+  --color-secondary: #141519;      /* 딥 다크 네이비 (베이스 톤) */
+  --color-accent: #ff1f3d;         /* LIVE 레드 (강조 포인트) */
+
+  /* Background Colors */
+  --color-bg-primary: #0e0e11;     /* 최심층 배경 */
+  --color-bg-secondary: #18191d;   /* 카드·썸네일 영역 */
+
+  /* Text Colors */
+  --color-text-primary: #ffffff;   /* 제목·주요 텍스트 */
+  --color-text-secondary: #b8bcc2; /* 본문·채널명 */
+  --color-text-muted: #6e7278;     /* 부가 정보·시간·조회수 */
+
+  /* Interactive Colors */
+  --color-button-primary: #00ffa3; /* 주요 버튼 (CTA) */
+  --color-button-hover: #00cc82;   /* 버튼 호버 상태 */
+  --color-link: #00ffa3;           /* 활성 링크 */
+  --color-link-hover: #5cffc4;     /* 링크 호버 상태 */
+
+  color-scheme: light dark;
+}
+
+/* 사용자가 라이트 모드를 선호할 때 (팔레트 문서의 라이트 모드 정의 반영) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f4f5f7;
+    --color-text-primary: #141519;
+    --color-text-secondary: #4a4e54;
+    --color-text-muted: #6e7278;
+    /* 그린은 라이트 배경에서 눈부시므로 약간 어둡게 */
+    --color-primary: #00cc82;
+    --color-link: #00a86b;
+    --color-link-hover: #00cc82;
+  }
+}
+
+/* ===================================================================
+   CSS 초기화 (디자인 시스템 필수 규칙)
+   =================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+}
+
+/* Root 앱 컨테이너 설정 */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
