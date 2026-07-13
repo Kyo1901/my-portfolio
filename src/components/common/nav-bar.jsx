@@ -84,10 +84,15 @@ function NavBar() {
             textColor="inherit"
             slotProps={{ indicator: { sx: { bgcolor: 'primary.main', height: 3 } } }}
             sx={{
+              alignSelf: { xs: 'center', sm: 'stretch' },
+              minHeight: 'unset',
+              '& .MuiTabs-flexContainer': { height: '100%' },
               '& .MuiTab-root': {
                 color: 'text.secondary',
                 fontWeight: 600,
                 minWidth: { xs: 80, sm: 100 },
+                minHeight: { xs: 48, sm: 'unset' },
+                height: { sm: '100%' },
               },
               '& .Mui-selected': {
                 color: 'primary.main',
