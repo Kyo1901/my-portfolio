@@ -56,8 +56,10 @@ function NavBar() {
           sx={{
             flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
+            alignItems: 'center',
             gap: { xs: 1, sm: 0 },
             py: { xs: 1, sm: 0 },
+            minHeight: { sm: 48 },
           }}
         >
           <Typography
