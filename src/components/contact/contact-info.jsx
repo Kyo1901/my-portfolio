@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -12,7 +13,8 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 /** 아이콘 + 텍스트로 정렬해 보여줄 연락처 정보 목록 */
 const CONTACT_ITEMS = [
-  { key: 'email', icon: <EmailIcon fontSize='small' />, label: '이메일', value: 'computer.gwangju@gmail.com' },
+  { key: 'email', icon: <EmailIcon fontSize='small' />, label: '이메일', value: 'skadnjs153@naver.com' },
+  { key: 'phone', icon: <PhoneIcon fontSize='small' />, label: '전화번호', value: '010-8905-1901' },
   { key: 'place', icon: <PlaceIcon fontSize='small' />, label: '위치', value: '광주광역시, 대한민국' },
   { key: 'time', icon: <AccessTimeIcon fontSize='small' />, label: '응답 시간', value: '09:00 - 18:00 (평일)' },
 ];
