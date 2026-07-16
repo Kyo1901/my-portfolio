@@ -71,12 +71,12 @@ function ContactSection() {
 
   return (
     <Box sx={{ textAlign: 'left' }}>
-      {/* 상단: 방명록 작성란(왼쪽) + 연락처(오른쪽) */}
+      {/* 상단: 방명록 작성란(왼쪽) + 연락처(오른쪽), 좁은 화면에서는 연락처가 먼저 */}
       <Grid container spacing={{ xs: 2, md: 3 }}>
-        <Grid size={{ xs: 12, md: 7 }}>
+        <Grid size={{ xs: 12, md: 7 }} sx={{ order: { xs: 2, md: 1 } }}>
           <GuestbookForm onSubmitted={handleSubmitted} />
         </Grid>
-        <Grid size={{ xs: 12, md: 5 }}>
+        <Grid size={{ xs: 12, md: 5 }} sx={{ order: { xs: 1, md: 2 } }}>
           <ContactInfo />
         </Grid>
       </Grid>
