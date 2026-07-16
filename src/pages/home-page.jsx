@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import HeroBanner from '../components/home/hero-banner.jsx';
 import SectionBand from '../components/home/section-band.jsx';
 import ProjectCard from '../components/home/project-card.jsx';
+import ContactSection from '../components/contact/contact-section.jsx';
 
 /**
  * HomePage 컴포넌트
@@ -105,8 +106,10 @@ function HomePage() {
         tone="default"
         overline="CONTACT"
         title="Contact"
-        subtitle="여기는 Contact 섹션입니다. 연락처, SNS, 간단한 메시지 폼이 들어갈 예정입니다."
-      />
+        subtitle="방명록과 연락처입니다. 방문 소감을 남겨주시면 큰 힘이 됩니다."
+      >
+        <ContactSection />
+      </SectionBand>
     </>
   );
 }
