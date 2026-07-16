@@ -10,6 +10,13 @@ import Stack from '@mui/material/Stack';
 import SendIcon from '@mui/icons-material/Send';
 import { supabase } from '../../lib/supabase.js';
 
+/** 입력 필드 공통 스타일: 호버 시 테두리를 포인트 컬러(네온 그린)로 표시 */
+const textFieldSx = {
+  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'primary.main',
+  },
+};
+
 /**
  * GuestbookForm 컴포넌트
  * Contact 섹션 왼쪽에 배치되는 방명록 작성 폼.
@@ -99,6 +106,7 @@ function GuestbookForm({ onSubmitted }) {
           fullWidth
           size='small'
           slotProps={{ htmlInput: { maxLength: 50 } }}
+          sx={textFieldSx}
         />
 
         <TextField
@@ -109,6 +117,7 @@ function GuestbookForm({ onSubmitted }) {
           fullWidth
           size='small'
           slotProps={{ htmlInput: { maxLength: 255 } }}
+          sx={textFieldSx}
         />
 
         <TextField
@@ -120,6 +129,7 @@ function GuestbookForm({ onSubmitted }) {
           multiline
           rows={4}
           slotProps={{ htmlInput: { maxLength: 500 } }}
+          sx={textFieldSx}
         />
 
         {/* 별점 평가 */}

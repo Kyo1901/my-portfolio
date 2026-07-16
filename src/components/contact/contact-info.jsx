@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import ButtonBase from '@mui/material/ButtonBase';
+import Tooltip from '@mui/material/Tooltip';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -11,10 +14,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
-/** 아이콘 + 텍스트로 정렬해 보여줄 연락처 정보 목록 */
+/** 아이콘 + 텍스트로 정렬해 보여줄 연락처 정보 목록 (isCopyable: 클릭 시 클립보드 복사) */
 const CONTACT_ITEMS = [
-  { key: 'email', icon: <EmailIcon fontSize='small' />, label: '이메일', value: 'skadnjs153@naver.com' },
-  { key: 'phone', icon: <PhoneIcon fontSize='small' />, label: '전화번호', value: '010-8905-1901' },
+  { key: 'email', icon: <EmailIcon fontSize='small' />, label: '이메일', value: 'skadnjs153@naver.com', isCopyable: true },
+  { key: 'phone', icon: <PhoneIcon fontSize='small' />, label: '전화번호', value: '010-8905-1901', isCopyable: true },
   { key: 'place', icon: <PlaceIcon fontSize='small' />, label: '위치', value: '광주광역시, 대한민국' },
   { key: 'time', icon: <AccessTimeIcon fontSize='small' />, label: '응답 시간', value: '09:00 - 18:00 (평일)' },
 ];
@@ -37,6 +40,19 @@ const SNS_LINKS = [
  * <ContactInfo />
  */
 function ContactInfo() {
+  const [copiedKey, setCopiedKey] = useState(null);
+
+  /** 이메일·전화번호 클릭: 클립보드에 복사하고 잠시 '복사됨!' 툴팁 표시 */
+  const handleCopy = async (item) => {
+    try {
+      await navigator.clipboard.writeText(item.value);
+      setCopiedKey(item.key);
+      setTimeout(() => setCopiedKey(null), 1500);
+    } catch {
+      /* 클립보드 미지원 환경에서는 무시 */
+    }
+  };
+
   return (
     <Paper
       variant='outlined'
@@ -57,35 +73,61 @@ function ContactInfo() {
         Info
       </Typography>
 
-      {/* 아이콘 + 텍스트 연락처 목록 */}
+      {/* 아이콘 + 텍스트 연락처 목록 (이메일·전화번호는 클릭 시 복사) */}
       <Stack spacing={2.5} sx={{ flexGrow: 1 }}>
-        {CONTACT_ITEMS.map((item) => (
-          <Stack key={item.key} direction='row' spacing={2} alignItems='center'>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'primary.main',
-                bgcolor: 'rgba(0, 255, 163, 0.08)',
-                flexShrink: 0,
-              }}
+        {CONTACT_ITEMS.map((item) => {
+          const row = (
+            <Stack direction='row' spacing={2} alignItems='center' sx={{ width: '100%' }}>
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'primary.main',
+                  bgcolor: 'rgba(0, 255, 163, 0.08)',
+                  flexShrink: 0,
+                }}
+              >
+                {item.icon}
+              </Box>
+              <Box sx={{ textAlign: 'left' }}>
+                <Typography sx={{ color: 'text.disabled', fontSize: '0.75rem' }}>
+                  {item.label}
+                </Typography>
+                <Typography sx={{ color: 'text.primary', fontSize: '0.95rem', wordBreak: 'break-all' }}>
+                  {item.value}
+                </Typography>
+              </Box>
+            </Stack>
+          );
+
+          if (!item.isCopyable) {
+            return <Box key={item.key}>{row}</Box>;
+          }
+
+          return (
+            <Tooltip
+              key={item.key}
+              title={copiedKey === item.key ? '복사됨!' : '클릭하여 복사'}
+              placement='top-start'
             >
-              {item.icon}
-            </Box>
-            <Box>
-              <Typography sx={{ color: 'text.disabled', fontSize: '0.75rem' }}>
-                {item.label}
-              </Typography>
-              <Typography sx={{ color: 'text.primary', fontSize: '0.95rem', wordBreak: 'break-all' }}>
-                {item.value}
-              </Typography>
-            </Box>
-          </Stack>
-        ))}
+              <ButtonBase
+                onClick={() => handleCopy(item)}
+                aria-label={`${item.label} 복사`}
+                sx={{
+                  justifyContent: 'flex-start',
+                  borderRadius: 2,
+                  '&:hover': { bgcolor: 'rgba(0, 255, 163, 0.04)' },
+                }}
+              >
+                {row}
+              </ButtonBase>
+            </Tooltip>
+          );
+        })}
       </Stack>
 
       {/* 동그란 SNS 아이콘 버튼 */}
