@@ -18,7 +18,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const CONTACT_ITEMS = [
   { key: 'email', icon: <EmailIcon fontSize='small' />, label: '이메일', value: 'skadnjs153@naver.com', isCopyable: true },
   { key: 'phone', icon: <PhoneIcon fontSize='small' />, label: '전화번호', value: '010-8905-1901', isCopyable: true },
-  { key: 'place', icon: <PlaceIcon fontSize='small' />, label: '위치', value: '광주광역시, 대한민국' },
+  { key: 'place', icon: <PlaceIcon fontSize='small' />, label: '위치', value: '(현) 전남광주통합특별시\n(구) 광주 광역시' },
   { key: 'time', icon: <AccessTimeIcon fontSize='small' />, label: '응답 시간', value: '09:00 - 18:00 (평일)' },
 ];
 
@@ -97,7 +97,9 @@ function ContactInfo() {
                 <Typography sx={{ color: 'text.disabled', fontSize: '0.75rem' }}>
                   {item.label}
                 </Typography>
-                <Typography sx={{ color: 'text.primary', fontSize: '0.95rem', wordBreak: 'break-all' }}>
+                <Typography
+                  sx={{ color: 'text.primary', fontSize: '0.95rem', wordBreak: 'break-all', whiteSpace: 'pre-line' }}
+                >
                   {item.value}
                 </Typography>
               </Box>
