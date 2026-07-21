@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -6,7 +7,19 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import LaunchIcon from '@mui/icons-material/Launch';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import { getGithubRepoUrl } from '../../utils/github-url.js';
+
+/** 썸네일 영역 공통 크기(반응형) */
+const thumbnailSx = {
+  width: { xs: '100%', md: 300 },
+  height: { xs: 220, md: 300 },
+  flexShrink: 0,
+  borderBottom: { xs: '1px solid', md: 'none' },
+  borderRight: { xs: 'none', md: '1px solid' },
+  borderColor: 'divider',
+  bgcolor: 'background.default',
+};
 
 /**
  * ProjectListCard 컴포넌트
@@ -26,6 +39,7 @@ import { getGithubRepoUrl } from '../../utils/github-url.js';
  */
 function ProjectListCard({ title, description, techStack, projectType, detailUrl, thumbnailUrl }) {
   const githubUrl = getGithubRepoUrl(detailUrl);
+  const [isThumbnailBroken, setIsThumbnailBroken] = useState(false);
 
   return (
     <Card
@@ -45,23 +59,32 @@ function ProjectListCard({ title, description, techStack, projectType, detailUrl
         },
       }}
     >
-      {/* 썸네일 (1:1, 300x300) */}
-      <Box
-        component="img"
-        src={thumbnailUrl}
-        alt={`${title} 썸네일`}
-        loading="lazy"
-        sx={{
-          width: { xs: '100%', md: 300 },
-          height: { xs: 220, md: 300 },
-          flexShrink: 0,
-          objectFit: 'cover',
-          borderBottom: { xs: '1px solid', md: 'none' },
-          borderRight: { xs: 'none', md: '1px solid' },
-          borderColor: 'divider',
-          bgcolor: 'background.default',
-        }}
-      />
+      {/* 썸네일 (1:1, 300x300) — 로드 실패 시(썸네일 생성 대기 등) 대체 화면 표시 */}
+      {isThumbnailBroken ? (
+        <Box
+          sx={{
+            ...thumbnailSx,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+            color: 'text.disabled',
+          }}
+        >
+          <ImageOutlinedIcon sx={{ fontSize: 32 }} />
+          <Typography sx={{ fontSize: '0.8rem' }}>썸네일 준비 중</Typography>
+        </Box>
+      ) : (
+        <Box
+          component="img"
+          src={thumbnailUrl}
+          alt={`${title} 썸네일`}
+          loading="lazy"
+          onError={() => setIsThumbnailBroken(true)}
+          sx={{ ...thumbnailSx, objectFit: 'cover' }}
+        />
+      )}
 
       {/* 본문 */}
       <Box
