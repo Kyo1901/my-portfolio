@@ -1,24 +1,29 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import ProjectThumbnail from '../projects/project-thumbnail.jsx';
 
 /**
  * ProjectCard 컴포넌트
- * Projects 섹션의 더미 썸네일 카드. 상단 썸네일(그라데이션 플레이스홀더) + 제목/설명으로 구성.
- * 치지직식 그리드 카드 느낌(썸네일 중심)을 표현한다.
+ * Home Projects 섹션의 대표작 미리보기 카드. 16:9 썸네일 + 제목/설명으로 구성되며,
+ * 카드 전체를 클릭하면 배포된 사이트(Live Demo)로 새 탭에서 이동한다.
  *
  * Props:
  * @param {string} title - 프로젝트 제목 [Required]
  * @param {string} description - 프로젝트 짧은 설명 [Required]
- * @param {string} tag - 썸네일 위에 표시할 라벨(예: 'PROJECT 01') [Required]
+ * @param {string} thumbnailUrl - 썸네일 이미지 URL [Required]
+ * @param {string} detailUrl - 배포된 사이트 링크(Live Demo) [Required]
  *
  * Example usage:
- * <ProjectCard tag="PROJECT 01" title="Project One" description="샘플 설명" />
+ * <ProjectCard title="Petlog SNS" description="샘플 설명" thumbnailUrl="https://..." detailUrl="https://..." />
  */
-function ProjectCard({ title, description, tag }) {
+function ProjectCard({ title, description, thumbnailUrl, detailUrl }) {
   return (
     <Card
+      component="a"
+      href={detailUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       elevation={0}
       sx={{
         height: '100%',
@@ -29,39 +34,24 @@ function ProjectCard({ title, description, tag }) {
         borderColor: 'divider',
         borderRadius: 3,
         overflow: 'hidden',
+        textDecoration: 'none',
         transition: 'transform 0.2s ease, border-color 0.2s ease',
         '&:hover': {
           transform: 'translateY(-4px)',
-          borderColor: 'primary.dark',
+          borderColor: 'primary.main',
         },
       }}
     >
-      {/* 썸네일 플레이스홀더 (16:9 비율) */}
-      <Box
+      <ProjectThumbnail
+        src={thumbnailUrl}
+        alt={`${title} 썸네일`}
         sx={{
-          position: 'relative',
+          width: '100%',
           aspectRatio: '16 / 9',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundImage:
-            'linear-gradient(135deg, rgba(0,255,163,0.22) 0%, rgba(14,14,17,0.9) 70%)',
           borderBottom: '1px solid',
           borderColor: 'divider',
         }}
-      >
-        <Typography
-          sx={{
-            color: 'text.primary',
-            fontWeight: 800,
-            letterSpacing: '0.15em',
-            opacity: 0.85,
-            fontSize: { xs: '0.85rem', md: '0.95rem' },
-          }}
-        >
-          {tag}
-        </Typography>
-      </Box>
+      />
 
       <CardContent sx={{ flexGrow: 1, p: { xs: 2, md: 2.5 } }}>
         <Typography

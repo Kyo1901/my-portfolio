@@ -1,10 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 import HeroBanner from '../components/home/hero-banner.jsx';
 import SectionBand from '../components/home/section-band.jsx';
 import ProjectCard from '../components/home/project-card.jsx';
 import ContactSection from '../components/contact/contact-section.jsx';
+import { useProjects } from '../hooks/use-projects.js';
 
 /**
  * HomePage 컴포넌트
@@ -12,7 +17,7 @@ import ContactSection from '../components/contact/contact-section.jsx';
  * 카드 대신 풀-width 밴드(SectionBand)로 섹션을 구분하고 배경 톤을 번갈아 적용한다.
  * - Hero: 풀-width 히어로 밴드(HeroBanner)
  * - About / Skill Tree / Contact: 텍스트 밴드
- * - Projects: 더미 썸네일 카드 3개 그리드
+ * - Projects: Supabase 대표작 썸네일 카드 그리드(최대 4개)
  *
  * Props: 없음
  *
@@ -20,27 +25,8 @@ import ContactSection from '../components/contact/contact-section.jsx';
  * <HomePage />
  */
 
-/** Projects 섹션의 더미 썸네일 카드 데이터 */
-const DUMMY_PROJECTS = [
-  {
-    key: 'p1',
-    tag: 'PROJECT 01',
-    title: 'Project One',
-    description: '대표작 썸네일이 들어갈 자리입니다. 프로젝트 요약을 표시합니다.',
-  },
-  {
-    key: 'p2',
-    tag: 'PROJECT 02',
-    title: 'Project Two',
-    description: '대표작 썸네일이 들어갈 자리입니다. 프로젝트 요약을 표시합니다.',
-  },
-  {
-    key: 'p3',
-    tag: 'PROJECT 03',
-    title: 'Project Three',
-    description: '대표작 썸네일이 들어갈 자리입니다. 프로젝트 요약을 표시합니다.',
-  },
-];
+/** Projects 섹션에 표시할 대표작 최대 개수 */
+const FEATURED_PROJECT_COUNT = 4;
 
 /** 주요 버튼 공통 스타일 */
 const primaryButtonSx = {
@@ -51,6 +37,8 @@ const primaryButtonSx = {
 
 function HomePage() {
   const navigate = useNavigate();
+  const { projects, isLoading, errorMessage } = useProjects();
+  const featuredProjects = projects.slice(0, FEATURED_PROJECT_COUNT);
 
   return (
     <>
@@ -82,19 +70,38 @@ function HomePage() {
         tone="paper"
         overline="PROJECTS"
         title="Projects"
-        subtitle="여기는 Projects 섹션입니다. 대표작 썸네일 3-4개와 '더 보기' 버튼이 들어갈 예정입니다."
+        subtitle="지금까지 만든 대표 프로젝트입니다."
       >
-        <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: 4 }}>
-          {DUMMY_PROJECTS.map((project) => (
-            <Grid key={project.key} size={{ xs: 12, sm: 6, md: 4 }}>
-              <ProjectCard
-                tag={project.tag}
-                title={project.title}
-                description={project.description}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        {errorMessage && (
+          <Alert severity="error" variant="outlined" sx={{ mb: 3, textAlign: 'left' }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+        {isLoading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+            <CircularProgress size={28} color="primary" />
+          </Box>
+        ) : featuredProjects.length === 0 ? (
+          !errorMessage && (
+            <Typography sx={{ color: 'text.disabled', py: 4, fontSize: '0.9rem' }}>
+              아직 등록된 프로젝트가 없습니다.
+            </Typography>
+          )
+        ) : (
+          <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: 4 }}>
+            {featuredProjects.map((project) => (
+              <Grid key={project.id} size={{ xs: 12, sm: 6, md: 4 }}>
+                <ProjectCard
+                  title={project.title}
+                  description={project.description}
+                  thumbnailUrl={project.thumbnail_url}
+                  detailUrl={project.detail_url}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
 
         <Button variant="contained" color="primary" onClick={() => navigate('/projects')} sx={primaryButtonSx}>
           더 보기
