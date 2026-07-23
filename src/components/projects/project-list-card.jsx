@@ -8,6 +8,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ProjectThumbnail from './project-thumbnail.jsx';
 import { getGithubRepoUrl } from '../../utils/github-url.js';
+import { primaryAlpha } from '../../utils/shared-styles.js';
 
 /** 썸네일 영역 공통 크기(반응형) */
 const thumbnailSx = {
@@ -53,7 +54,7 @@ function ProjectListCard({ title, description, techStack, projectType, detailUrl
         transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
         '&:hover': {
           borderColor: 'primary.main',
-          boxShadow: '0 0 0 1px rgba(0, 255, 163, 0.4), 0 0 24px rgba(0, 255, 163, 0.25)',
+          boxShadow: `0 0 0 1px ${primaryAlpha(0.4)}, 0 0 24px ${primaryAlpha(0.25)}`,
         },
       }}
     >

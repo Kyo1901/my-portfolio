@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
  * 중앙 정렬된 헤더(오버라인 + 언더바 + 제목 + 설명) 아래에 children 을 배치한다.
  *
  * Props:
+ * @param {string} id - 섹션 고정 앵커 id (앵커 스크롤 이동용) [Optional]
  * @param {string} tone - 배경 톤 'default'(#0E0E11) | 'paper'(#18191D) [Optional, 기본값: 'default']
  * @param {string} overline - 상단 라벨(예: 'ABOUT ME') [Required]
  * @param {string} title - 섹션 제목 [Required]
@@ -16,13 +17,14 @@ import Typography from '@mui/material/Typography';
  * @param {node} children - 섹션 본문 요소(버튼, 그리드 등) [Optional]
  *
  * Example usage:
- * <SectionBand tone="paper" overline="ABOUT ME" title="About Me" subtitle="설명...">...</SectionBand>
+ * <SectionBand id="contact" tone="paper" overline="ABOUT ME" title="About Me" subtitle="설명...">...</SectionBand>
  */
-function SectionBand({ tone = 'default', overline, title, subtitle, children }) {
+function SectionBand({ id, tone = 'default', overline, title, subtitle, children }) {
   const bgcolor = tone === 'paper' ? 'background.paper' : 'background.default';
 
   return (
     <Box
+      id={id}
       component="section"
       sx={{
         width: '100%',

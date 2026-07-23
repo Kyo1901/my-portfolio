@@ -1,7 +1,8 @@
 /* ===================================================================
    컬러 팔레트 디자인 시스템 (출처: 치지직 CHZZK)
    "컬러 팔레트 디자인 시스템.md" 의 CSS 변수를 그대로 적용
-   기본은 다크 모드, prefers-color-scheme: light 로 라이트 모드 대응
+   theme.js 의 MUI 테마가 다크 모드로 고정되어 있어, 이 파일도 다크 모드 값만 사용한다
+   (라이트 모드 분기를 두면 body 배경만 밝아지고 MUI 컴포넌트는 계속 어두워 화면이 어긋난다)
    =================================================================== */
 :root {
   /* Primary Colors */
@@ -28,22 +29,7 @@
   --color-link: #00ffa3;           /* 활성 링크 */
   --color-link-hover: #5cffc4;     /* 링크 호버 상태 */
 
-  color-scheme: light dark;
-}
-
-/* 사용자가 라이트 모드를 선호할 때 (팔레트 문서의 라이트 모드 정의 반영) */
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-bg-primary: #ffffff;
-    --color-bg-secondary: #f4f5f7;
-    --color-text-primary: #141519;
-    --color-text-secondary: #4a4e54;
-    --color-text-muted: #6e7278;
-    /* 그린은 라이트 배경에서 눈부시므로 약간 어둡게 */
-    --color-primary: #00cc82;
-    --color-link: #00a86b;
-    --color-link-hover: #00cc82;
-  }
+  color-scheme: dark;
 }
 
 /* ===================================================================

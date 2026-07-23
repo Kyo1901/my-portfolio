@@ -13,6 +13,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { primaryAlpha } from '../../utils/shared-styles.js';
 
 /** 아이콘 + 텍스트로 정렬해 보여줄 연락처 정보 목록 (isCopyable: 클릭 시 클립보드 복사) */
 const CONTACT_ITEMS = [
@@ -87,7 +88,7 @@ function ContactInfo() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'primary.main',
-                  bgcolor: 'rgba(0, 255, 163, 0.08)',
+                  bgcolor: primaryAlpha(0.08),
                   flexShrink: 0,
                 }}
               >
@@ -122,7 +123,7 @@ function ContactInfo() {
                 sx={{
                   justifyContent: 'flex-start',
                   borderRadius: 2,
-                  '&:hover': { bgcolor: 'rgba(0, 255, 163, 0.04)' },
+                  '&:hover': { bgcolor: primaryAlpha(0.04) },
                 }}
               >
                 {row}
@@ -152,7 +153,7 @@ function ContactInfo() {
                 '&:hover': {
                   color: 'primary.main',
                   borderColor: 'primary.main',
-                  bgcolor: 'rgba(0, 255, 163, 0.08)',
+                  bgcolor: primaryAlpha(0.08),
                 },
               }}
             >

@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -8,8 +9,12 @@ import Alert from '@mui/material/Alert';
 import HeroBanner from '../components/home/hero-banner.jsx';
 import SectionBand from '../components/home/section-band.jsx';
 import ProjectCard from '../components/home/project-card.jsx';
+import AboutPreview from '../components/home/about-preview.jsx';
+import SkillPreview from '../components/home/skill-preview.jsx';
 import ContactSection from '../components/contact/contact-section.jsx';
 import { useProjects } from '../hooks/use-projects.js';
+import { usePortfolio } from '../hooks/use-portfolio.js';
+import { primaryButtonSx } from '../utils/shared-styles.js';
 
 /**
  * HomePage 컴포넌트
@@ -28,45 +33,43 @@ import { useProjects } from '../hooks/use-projects.js';
 /** Projects 섹션에 표시할 대표작 최대 개수 */
 const FEATURED_PROJECT_COUNT = 4;
 
-/** 주요 버튼 공통 스타일 */
-const primaryButtonSx = {
-  fontWeight: 700,
-  color: 'primary.contrastText',
-  '&:hover': { bgcolor: 'primary.dark' },
-};
-
 function HomePage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { projects, isLoading, errorMessage } = useProjects();
+  const { getHomeData } = usePortfolio();
+  const homeData = getHomeData();
   const featuredProjects = projects.slice(0, FEATURED_PROJECT_COUNT);
+
+  // 다른 페이지에서 NavBar 의 Contact 탭(anchorId 이동)으로 들어온 경우, 해당 섹션으로 스크롤
+  useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+    const sectionId = location.hash.slice(1);
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }, [location.hash]);
 
   return (
     <>
       {/* SECTION 01 · Hero */}
-      <HeroBanner />
+      <HeroBanner recentProjects={featuredProjects} />
 
       {/* SECTION 02 · About Me */}
-      <SectionBand
-        tone="paper"
-        overline="ABOUT ME"
-        title="About Me"
-        subtitle="여기는 About Me 섹션입니다. 간단한 자기소개와 '더 알아보기' 버튼이 들어갈 예정입니다."
-      >
-        <Button variant="contained" color="primary" onClick={() => navigate('/about')} sx={primaryButtonSx}>
-          더 알아보기
-        </Button>
+      <SectionBand id="about" tone="paper" overline="ABOUT ME" title="About Me">
+        <AboutPreview homeData={homeData} onNavigateToAbout={() => navigate('/about')} />
       </SectionBand>
 
       {/* SECTION 03 · Skill Tree */}
-      <SectionBand
-        tone="default"
-        overline="SKILL TREE"
-        title="Skill Tree"
-        subtitle="여기는 Skill Tree 섹션입니다. 기술 스택을 트리나 프로그레스바로 시각화할 예정입니다."
-      />
+      <SectionBand tone="default" overline="SKILL TREE" title="Skill Tree">
+        <SkillPreview skills={homeData.skills} onNavigateToAbout={() => navigate('/about')} />
+      </SectionBand>
 
       {/* SECTION 04 · Projects */}
       <SectionBand
+        id="projects"
         tone="paper"
         overline="PROJECTS"
         title="Projects"
@@ -110,6 +113,7 @@ function HomePage() {
 
       {/* SECTION 05 · Contact */}
       <SectionBand
+        id="contact"
         tone="default"
         overline="CONTACT"
         title="Contact"
